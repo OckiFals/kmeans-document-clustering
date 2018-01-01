@@ -1,0 +1,393 @@
+/*
+Theme Name: Magzimp Final Reconstruction
+Theme URI: http://www.magzimp.org/
+Description: The original Magzimp WordPress theme.
+Version: 1.1
+Author: Magzimp Team
+Tags: two columns, widgets, themes preview, multi dimentional
+
+Magzimp Final Reconstruction WordPress by magzimp || http://www.magzimp.com
+Designed by Agito
+Programmed by Nanxz
+*/
+
+/* General */
+body {background:#1f2232; margin:0px; padding:0;font-family: Arial, Helvetica, sans-serif; font-size:15px; color: #555;}
+a { text-decoration:none; color:#FF0000;}
+a img {border:none;}
+blockquote:before, blockquote:after, q:before, q:after {content:''; content:none;}
+:focus {outline:0;}
+ins {text-decoration:none;}
+del {text-decoration: line-through;}
+
+
+
+
+/* Main */
+#wrapper {width:1024px; margin:auto;}
+#wrapinside {margin: 0 5px;}
+#header {height:130px;}
+#name {height:94px; border-bottom:solid 10px #FF0000;}
+#menu {height:39px;}
+#contentwrap {margin:25px 0 10px 0; position: relative; background:#fff; }
+#content {float:right; width:670px; padding: 30px 20px 20px 20px; background:#fff;}
+#sidebar {float:left;width:290px; line-height:23px;}
+.clearer {clear: both;}
+#footer {height:40px;border-top:solid 10px #FF0000; color:#fff; padding-top:5px; font-size:12px; font-weight:bold;}
+
+
+/* menu */
+#menu ul{list-style: none;	margin-left:-42px;}
+#menu ul li{float: left;}
+#menu ul li a{
+	padding: 10px 20px 10px 20px;
+	text-decoration:none;
+	color: #fff;
+	display: block;
+	font-weight:bold;
+	border-right:1px solid #777;
+}
+
+#menu li a:visited{text-decoration: none;}
+#menu .current_page_item a{background-color:#FF0000;}
+#menu li a:hover {background-color:#FF0000;}
+
+/* name */
+
+#logo a{width:299px;height:94px;display:block;float:left; background: url(images/logo.jpg) no-repeat; }
+#logo span{display:none;}
+
+#slideshow {
+	width:350px;
+	height:75px;
+	display:block;
+	float:left;
+	margin: 12px 0 0 10px;
+	background-image: url(images/slideshow.gif);
+	background-repeat: no-repeat;
+}
+#slideshow span{display:none;}
+
+
+#box {width:330px;height:94px;display:block;float:right;}
+#boxsmall {width:330px; height:47px;font-size:12px; color:#999; font-weight:bold; font-style:italic;}
+#translate { padding-top:10px; float:right;}
+
+#search{width:330px; height:47px; }
+#search form {
+	float: right;
+	margin: 0;
+	padding: 7px 0 0 0;
+}
+
+#search fieldset {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+#search input {
+	float: left;
+	border: none;
+}
+
+#search-text {
+	width: 215px;
+	height: 18px;
+	padding: 3px 0 3px 0;
+	border: 1px solid #333333;
+	background: #ECF9E4;
+	color: #000000;
+}
+
+#search-submit {
+	height: 23px;
+	margin-left: 10px;
+	padding: 0 10px;
+	background: #ff0000;
+	font-weight:bold;
+	color: #FFFFFF;
+	cursor:pointer;
+}
+
+
+/* sidebar */
+#sidebar a, a:hover{text-decoration:none;}
+.sidebarwrap {margin:0 0 20px 0;background:#fff; padding:5px 15px 15px 15px;}
+.judulsidebar {display:block; background-color:#FF0000; color:#FFFFFF; text-align:center; padding:6px; margin: 10px 0;}
+
+#sidebar ul {
+	margin: 0px 0px 0px 10px;
+	padding: 0;
+	list-style: none;
+	line-height: normal;
+}
+
+#sidebar li {
+	margin-bottom: 30px;
+}
+
+
+#sidebar ul li {
+	margin: 0;
+	padding: 8px 0px 8px 15px;
+	border-bottom: 1px solid #E2E2E2;
+	background: url(images/img09.jpg)  no-repeat left;
+}
+
+#sidebar ul li a{color:#555;}
+#sidebar ul li a:hover{color:#ff0000;}
+
+#ads {height:250px; margin: 10px 0px;}
+.adsimage {
+	border:solid 5px #fff;
+	float:left; 
+	margin:10px;
+	-moz-box-shadow:0 0 10px rgba(0,0,0,1);
+	-webkit-box-shadow:0 0 10px rgba(0,0,0,1); 
+	box-shadow:0 0 10px rgba(0,0,0,1)
+}
+
+
+/*content*/
+#newpost { margin-bottom:40px;}
+.oldpost { width: 670px; margin-bottom:50px;}
+#post-2 { width:320px; float:left; margin-right:20px; margin-bottom:20px;}
+#post-3 { width:320px; float:right; margin-bottom:20px;}
+#post-4 { width:320px; float:left; margin-right:20px; margin-bottom:20px;}
+#post-5 { width:320px; float:right; margin-bottom:20px;}
+
+.feature img {
+	width:140px;
+	margin:20px 15px 5px 5px; 
+	border:solid 5px #fff;
+	float:left; 
+	-moz-box-shadow:0 0 10px rgba(0,0,0,1);
+	-webkit-box-shadow:0 0 10px rgba(0,0,0,1); 
+	box-shadow:0 0 10px rgba(0,0,0,1)
+}
+
+.post{width:100%;}
+.titlepost {margin:0; padding:0 0 5px 0;}
+.titlepost a{text-decoration:none; color:#000;}
+.titlepost a:hover{color:#ff0000;}
+.post-info {background:#E2E2E2; font-size:12px; font-weight:bold; padding:5px 10px;}
+
+.day{padding-left:20px; padding-right:20px;background: url(images/date.png) no-repeat left ;}
+.category {padding-left:20px; padding-right:20px;background: url(images/cat.png) no-repeat left ;}
+/*.comments {padding-left:20px; margin-left:330px; background: url(images/comment.png) no-repeat left ;}*/
+.comments {padding-left:20px; margin-left:300px; background: url(images/comment.png) no-repeat left ;}
+.more {
+	float:right;
+}
+.more a {
+	color:#fff;
+	font-weight:bold;
+	display:block;
+	background-color:#ff0000;
+	padding-top: 0px;
+	padding-right: 5px;
+	padding-bottom: 0px;
+	padding-left: 5px;
+}
+
+
+#theme {background:#000; padding:20px;}
+#themebox {width:630px; min-height: 265px;margin-top:10px;}
+#titletheme{background:#ff0000; width:590px; padding:10px 20px; margin-bottom:5px;}
+#titletheme h3 {margin:0; padding:0;}
+#titletheme a {color:#fff;}
+
+
+
+.theme-entry {float:left; padding:20px;}
+.judultheme {text-align:center; width:170px;}
+.judultheme a{color:#fff; }
+.judultheme a:hover {color:#ff0000;}
+
+.theme-entry img {
+	width:140px;
+	height:140px;
+	border:solid 10px #fff;
+	-moz-box-shadow:0 0 20px #fff;
+	-webkit-box-shadow:0 0 20px #fff; 
+	box-shadow:0 0 20px #fff;
+}
+
+#nav {background:#E2E2E2; padding:5px 20px 40px 20px; font-weight:bold; margin-top:20px;}
+.postnav .previous a {float: left;}
+.postnav .next a {float: right;}
+.postnav .top a {float: left; margin-left:150px;}
+
+
+
+/*entry*/
+
+.entry { padding-top:0px; text-align:justify; line-height:23px;}
+
+.entry .alignright {float:right;}
+.entry .alignleft {float:left;}
+
+.entry img {
+	margin:20px ;
+	border:solid 10px #E2E2E2;
+	-moz-box-shadow:0 0 10px rgba(0,0,0,1);
+	-webkit-box-shadow:0 0 10px rgba(0,0,0,1); 
+	box-shadow:0 0 10px rgba(0,0,0,1)
+}
+
+
+img.wp-smiley {border:none; margin:0;}
+
+blockquote {background: url(images/blockquote.png) no-repeat top left; margin-left:1em; padding-left:2em; font-style:italic;}
+
+.author {background: #000; padding:10px 10px 32px 20px; margin-bottom:20px; color:#fff;}
+.gravatar img {width:64px; height:64px; float:left; border:solid 4px #E2E2E2; margin-right:20px;}
+.author-name {font-weight:bold;}
+.author-desk {font-style: italic; font-size:13px;}
+
+
+/*comments*/
+
+.comments-wrap { margin-bottom:20px;}
+.comments-info {background:#E2E2E2; font-size:12px; font-weight:bold; padding:10px 10px 25px 10px; margin-bottom:20px;}
+.comments-total {padding-left:20px; background: url(images/comment.png) no-repeat left ; float:left;}
+.add-comments {float:right;}
+
+/* commentlist */
+.commentlist { clear: both;	padding:  5px 0 10px; margin-bottom: 20px; list-style:none; background:#E2E2E2;}
+.commentlist ul{list-style: none;}
+.commentlist li { background-color: #fff; padding: 0; margin: 10px;  }
+
+
+.comment-box {height:25px;}
+.comment-data {background:#181818;color:#fff; font-size:11px; float:right; padding:5px; margin-right:20px;}
+.comment-number { font-weight:bold; float:left}
+.commentlist .commentmetadata {padding: 4px 0 2px 38px; clear: both;}
+.reply {float:right;}
+.reply a {color:#fff; font-weight:bold;  display:block; background-color:#ff0000; padding: 3px 8px; }
+.reply a:hover { background-color:#000000;}
+
+.comment-gravatar img {width:64px; height:64px; float:left; border:solid 4px #E2E2E2; margin:0 20px 5px 20px;}
+.commentlist cite {	font: bold 16px Arial, Helvetica, sans-serif; float: left;  }
+.commentlist cite a { background: none;	border: none !important; text-decoration: none; }
+.commentlist cite a:hover {color:#000;}
+
+.commentlist .alt {	background: #BCBCBC; }
+
+.isi-comment {
+	margin-top:5px;
+	text-align:justify;
+	padding-top: 36px;
+	padding-right: 18px;
+	padding-bottom: 36px;
+	padding-left: 18px;
+}
+
+#respond {background:#E2E2E2; font-size:13px; font-weight:bold; padding:40px; margin-bottom:20px;}
+
+/* commentform */
+#commentform {
+	padding: 10px 0;
+	margin: 0;
+}
+#commentform p {
+	clear: both;
+	padding-bottom: 10px;
+}
+#commentform label {
+	font-weight: bold;
+	color:#ff000;
+	font-size: 100%;
+	padding-top: 8px;
+	width: 80px;
+	float: left;
+}
+
+#commentform small {
+	color: #fff;
+	font-size: 90%;
+	padding-top: 8px;
+	display: block;
+}
+#commentform input {
+	width: 220px;
+	padding: 4px 5px;
+	border: 1px solid #d1d9dc;
+	float: left;
+	margin-right: 10px;
+	background:#fff;
+}
+#commentform textarea {
+	width: 570px;
+	height: 150px;
+	background:#fff;
+	border: solid 1px #d1d9dc;
+	padding: 5px 3px 3px 7px;
+}
+
+#commentform #submit {
+	width: 200px;
+	height: 34px;
+	padding: 0;
+	border: none;
+	margin-top:5px;
+	margin-left: 2px;
+	background-color:#ff0000;
+	color:#fff;
+	font-weight:bold;
+	cursor:pointer;
+}
+
+#commentform #submit:hover{ background-color:#000;}
+
+
+#commentform textarea:focus, #commentform input[type="text"]:focus {
+	border-color: #fff;
+}
+
+
+/*footer*/
+#footer a{color: #FF0000;}
+#credit{float:left}
+#power{float:right}
+
+
+/*khusus buat postingan theme buat menampilkan download dan priview*/
+#download {background: #E2E2E2; padding:10px 10px 20px 20px; margin-bottom:20px; color:#000;}
+#downloadbox { margin-bottom:10px; height:52px; clear:both;}
+
+#prev a{background:url(images/preview.png) center no-repeat; display:block; height:52px; width:300px; float:left; padding-left:}
+#prev a:hover{background:url(images/previewhover.png) center no-repeat;}
+
+#prev span{display:none;}
+
+#down a{background:url(images/down.png) center no-repeat; display:block; height:52px; width:300px; float:right;}
+#down a:hover{background:url(images/downhover.png) center no-repeat;}
+#down span{display:none;}
+
+#note {font-size:16px; font-weight:bold; font-style:italic; text-align:center;}
+
+
+/*Entry wp smiley
+**********/
+#entry-wp-smiley{
+	border:none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#related-posts{
+	width:630px;
+}
+#related-posts a{text-decoration:none; color:#555;}
+#related-posts a:hover{color:#ff0000;}
+
+/*Error Comment text
+********************/
+#error-comment-message {
+	padding: 5px;
+	font-weight: bold;
+	color: #FF0000;
+	text-align: center;
+}
