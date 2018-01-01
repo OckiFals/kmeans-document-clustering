@@ -93,7 +93,7 @@ class Main extends CI_Controller
 
     public function proses(){
         $klustering = $this->input->post('klustering');
-        redirect('main/klustering?kluster='.$klustering);
+        redirect(base_url('klustering?kluster='.$klustering));
     }
 
 }

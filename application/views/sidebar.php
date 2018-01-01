@@ -32,7 +32,7 @@
       
  
         <li class="<?php if($this->uri->segment(1)=="daftarpaper"){echo "active";}?>">
-          <a href="daftarpaper">
+          <a href="<?php echo base_url('daftarpaper') ?>">
             <i class="fa fa-edit"></i> <span>Data Skripsi</span>
             <span class="pull-right-container">
               <!-- <i class="fa fa-angle-left pull-right"></i> -->
@@ -73,7 +73,7 @@
           <ul class="treeview-menu">
            
             <li class="<?php if($this->uri->segment(1)=='klustering'){echo "active";}?>">
-            <a href="klustering"><i class="fa fa-circle-o"></i> K-Means</a></li>
+            <a href="<?php echo base_url('klustering') ?>"><i class="fa fa-circle-o"></i> K-Means</a></li>
             
           </ul>
         </li>
