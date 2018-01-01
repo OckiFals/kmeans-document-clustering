@@ -25,7 +25,7 @@ function stopword($file) {
 			$stopwordz[] = $row[0];
 		}
 	} else {
-		echo "0 results";
+		//echo "0 results";
 	}
 
 	$conn->close();
@@ -35,6 +35,7 @@ function stopword($file) {
 	}
 
 	$trimmed = array_map('trim', $stopwordz);
+
 	$lines1 = array_map('trim', $lines);
 	$lines1 = preg_replace('/[0-9]+/', '', $lines1); // hapus angka
 
@@ -91,12 +92,11 @@ if ($result->num_rows > 0) {
 		$abstrak[] = $row[0];
 	}
 } else {
-	echo "0 results";
+	//echo "0 results";
 }
 
 $conn->close();
 
-// $abstrak1 = array(file_get_contents('abstrak.txt'), file_get_contents('abstrak1.txt'));
 $terms = [];
 $terms_temp = [];
 $df_array = [];
@@ -117,85 +117,87 @@ for ($i = 0; $i < count($abstrak); $i++) {
 }
 
 // test input
-$cluster_count = 4;
+
+$cluster_count = $this->session->userdata('kluster');
+
 ksort($terms);
 ksort($wtf);
 ?>
-	<table border="1">
-	<thead>
-		<tr>
-			<td><b><center>No</center></b></td>
-			<td><b><center>Terms</center></b></td>
+	<!-- <table border="1"> -->
+	<!-- <thead> -->
+		<!-- <tr> -->
+			<!-- <td><b><center>No</center></b></td> -->
+			<!-- <td><b><center>Terms</center></b></td> -->
 			
 			<?php foreach ($abstrak as $index => $abstraka) : ?>
-			<td width=50px><b><center>D<?php echo $index + 1 ?></center></td>
+			<!-- <td width=50px><b><center>D<?php //echo $index + 1 ?></center></td> -->
 			<?php endforeach; ?>
 			
-			<td width=25px><b><center>df</center></b></td>
+			<!-- <td width=25px><b><center>df</center></b></td> -->
 
 			<?php foreach ($abstrak as $index => $abstraka) : ?>
-			<td width=50px><b><center>D<?php echo $index + 1 ?></center></b></td>
+			<!-- <td width=50px><b><center>D<?php //echo $index + 1 ?></center></b></td> -->
 			<?php endforeach; ?>
 
-			<td><b><center>idf</b></td>
+			<!-- <td><b><center>idf</b></td> -->
 
 			<?php foreach ($abstrak as $index => $abstraka) : ?>
-			<td width=50px><b><center>D<?php echo $index + 1 ?></center></b></td>
+			<!-- <td width=50px><b><center>D<?php //echo $index + 1 ?></center></b></td> -->
 			<?php endforeach; ?>
 			<?php $tfidf_arraycount = array_fill(0, count($abstrak), 0) ?>
 			<?php $tfidf_sqrt = array() ?>
-		</tr>
-	</thead>
+		<!-- </tr> -->
+	<!-- </thead> -->
 	<?php 
 $i = 0;
 $df = 0;
 foreach ($terms as $term => $count) : ?>
-		<tr>
-			<td>
+		<!-- <tr> -->
+			<!-- <td> -->
 				<?php $i++;
-			echo $i ?>
-			</td>
-			<td>
-				<?php echo $term ?>
-			</td>
+			// echo $i ?>
+			<!-- </td> -->
+			<!-- <td> -->
+				<?php //echo $term ?>
+			<!-- </td> -->
 			<?php foreach ($terms_temp as $jindex => $hasil) : ?>
-			<td>
+			<!-- <td> -->
 				<?php if (array_key_exists($term, $hasil)) : ?>
 					<?php 
 				$df++;
-				echo $hasil[$term] ?>
+				// echo $hasil[$term] ?>
 				<?php else : ?>
-					0
+					
 				<?php endif; ?>
-			</td>
+			<!-- </td> -->
 			<?php endforeach; ?>
-			<td>
-				<?php echo $df ?>
-			</td>
+			<!-- <td> -->
+				<?php //echo $df ?>
+			<!-- </td> -->
 			<?php
 		$df_array[$i] = $df;
 		$df = 0
 		?>
 			<!-- TFIDF -->
 			<?php foreach ($wtf_temp as $jindex => $hasil) : ?>
-			<td>
+			<!-- <td> -->
 				<?php if (array_key_exists($term, $hasil)) : ?>
 					<?php 
-				echo number_format($wtf_temp[$jindex][$term], 5);
+				//echo number_format($wtf_temp[$jindex][$term], 5);
 				?>
 				<?php else : ?>
-					0
+					
 				<?php endif; ?>
-			</td>
+			<!-- </td> -->
 			<?php endforeach; ?>
-			<td>
+			<!-- <td> -->
 			<!-- ??? -->
 			<?php
 			$idf_array[$i] = (float) number_format(log(count($abstrak) / $df_array[$i]), 5);
-			echo $idf_array[$i];?>
-			</td>
+			//echo $idf_array[$i];?>
+			<!-- </td> -->
 			<?php foreach ($wtf_temp as $jindex => $hasil) : ?>
-			<td>
+			<!-- <td> -->
 				<?php if (array_key_exists($term, $hasil)) : ?>
 				<?php
 					$tfidf = (float) number_format(
@@ -210,28 +212,28 @@ foreach ($terms as $term => $count) : ?>
 				<?php
 				$tfidf_arraycount[$jindex] += $tfidf;
 				$tfidf_sqrt[$jindex] = sqrt($tfidf_arraycount[$jindex]); 
-				echo $tfidf;
+				//echo $tfidf;
 				?>
-			</td>
+			<!-- </td> -->
 			<?php endforeach; ?>
 
-		</tr>
+		<!-- </tr> -->
 	<?php endforeach; ?>
-	</table>
+	<!-- </table> -->
 
-	<table border="1">
-		<thead>
-			<tr>
-				<td><b><center>No</center></b></td>
-				<td><b><center>Terms</center></b></td>
+	<!-- <table border="1"> -->
+		<!-- <thead> -->
+			<!-- <tr> -->
+				<!-- <td><b><center>No</center></b></td> -->
+				<!-- <td><b><center>Terms</center></b></td> -->
 				<?php foreach ($abstrak as $index => $abstraka) : ?>
-				<td width=50px><b><center>D<?php echo $index + 1 ?></center></b></td>
+				<!-- <td width=50px><b><center>D<?php //echo $index + 1 ?></center></b></td> -->
 				<?php endforeach; ?>
 				<?php for($i = 0; $i < $cluster_count; $i++): ?>
-				<td><b><center>C<?php echo $i+1 ?></center></b></td>
+				<!-- <td><b><center>C<?php //echo $i+1 ?></center></b></td> -->
 				<?php endfor; ?>
-			</tr>
-		</thead>
+			<!-- </tr> -->
+		<!-- </thead> -->
 	<?php 
 	$no = 0;
 	$df = 0;
@@ -243,17 +245,17 @@ foreach ($terms as $term => $count) : ?>
 		}
 	}
 	foreach ($terms as $term => $count) : ?>
-		<tr>
-			<td>
-				<?php $no++; echo $no ?>
-			</td>
-			<td>
-				<?php echo $term ?>
-			</td>
+		<!-- <tr> -->
+			<!-- <td> -->
+				<?php $no++; //echo $no ?>
+			<!-- </td> -->
+			<!-- <td> -->
+				<?php //echo $term ?>
+			<!-- </td> -->
 
 			<!-- normalisasi -->
 			<?php foreach ($wtf_temp as $jindex => $hasil) : ?>
-			<td>
+			<!-- <td> -->
 				<?php if (array_key_exists($term, $hasil)) : ?>
 				<?php
 				$tfidf = (float)number_format(
@@ -273,35 +275,34 @@ foreach ($terms as $term => $count) : ?>
 					$clustering_array['d' . ($jindex + 1)]['c' . ($i + 1)] += $tfidf_hasil * $random[$i];
 				}
 				$tfidf_hasil_array[$term]['d' . ($jindex + 1)] = $tfidf_hasil;
-				echo $tfidf_hasil;
+				//echo $tfidf_hasil;
 				?>
-			</td>
+			<!-- </td> -->
 			<?php endforeach; ?>
 
 			<!-- random -->
 			<?php for ($i = 0; $i < $cluster_count; $i++) : ?>
-			<td><?php echo $random[$i]; ?></td>
+			<!-- <td><?php //echo $random[$i]; ?></td> -->
 			<?php endfor; ?>
-		</tr>
+		<!-- </tr> -->
 		<?php endforeach;?>
-	</table>
+	<!-- </table> -->
 
-    /////////////////////////////////
-	<table border="1">
-		<thead>
-			<tr>
-				<td><b><center>Cluster</center></b></td>
+	<!-- <table border="1"> -->
+		<!-- <thead> -->
+			<!-- <tr> -->
+				<!-- <td><b><center>Cluster</center></b></td> -->
 				<?php foreach ($clustering_array as $index => $cluster): ?>
-				<td><b><center><?php echo $index ?></center></b></td>
+				<!-- <td><b><center><?php //echo $index ?></center></b></td> -->
 				<?php endforeach; ?>
-			</tr>
-		</thead>
-		<tbody>
+			<!-- </tr> -->
+		<!-- </thead> -->
+		<!-- <tbody> -->
 			<?php $cluster_kmean = []; ?>
 			<?php for ($i = 0; $i < $cluster_count; $i++) : ?>
-				<tr>
+				<!-- <tr> -->
 					<?php $max = 'c1'; ?>
-					<td><?php echo 'c'.($i+1) ?></td>
+					<!-- <td><?php //echo 'c'.($i+1) ?></td> -->
 					<?php foreach ($clustering_array as $jindex => $cluster) : ?>
 						<?php 
 							for ($j=0; $j < $cluster_count ; $j++) { 
@@ -312,31 +313,31 @@ foreach ($terms as $term => $count) : ?>
 							// array_push($cluster_kmean[$max], $jindex);
 							$cluster_kmean[$max][$jindex] = $jindex;							
 						?>
-						<td>
+						<!-- <td> -->
 							<?php if(('c' . ($i + 1)) == $max): ?>
-							<span style="background-color:yellow">
-								<?php echo $clustering_array[$jindex]['c' . ($i + 1)]; ?>
+							<!-- <span style="background-color:yellow"> -->
+								<?php //echo $clustering_array[$jindex]['c' . ($i + 1)]; ?>
 							</span>
 							<?php else: ?>
-								<?php echo $clustering_array[$jindex]['c' . ($i + 1)]; ?>
+								<?php //echo $clustering_array[$jindex]['c' . ($i + 1)]; ?>
 							<?php endif; ?>
-						</td>
+						<!-- </td> -->
 					<?php endforeach; ?>
-				</tr>
+				<!-- </tr> -->
 				<?php endfor; ?>
-		</tbody>
-	</table>
+		<!-- </tbody> -->
+	<!-- </table> -->
 	
-	<table border="1">
+	<!-- <table border="1"> -->
 		<?php for ($i = 0; $i < $cluster_count; $i++) : ?>
-			<tr>
-				<td><b><center>C<?php echo $i+1 ?></center></b></td>
+			<!-- <tr> -->
+				<!-- <td><b><center>C<?php //echo $i+1 ?></center></b></td> -->
 				<?php foreach (array_keys($cluster_kmean['c'. ($i+1)]) as $key => $value) : ?>
-					<td><?php echo $value ?></td>
+					<!-- <td><?php //echo $value ?></td> -->
 				<?php endforeach; ?>
-			</tr>
+			<!-- </tr> -->
 		<?php endfor; ?>
-	</table>
+	<!-- </table> -->
 	
 	<?php 
 	$centroid = [];
@@ -355,19 +356,19 @@ foreach ($terms as $term => $count) : ?>
 			<?php endfor; ?>
 	<?php endforeach; ?>
 
-	<table border="1">
-		<thead>
-			<tr>
-				<td><b><center>No</center></b></td>
-				<td><b><center>Terms</center></b></td>
+	<!-- <table border="1"> -->
+		<!-- <thead> -->
+			<!-- <tr> -->
+				<!-- <td><b><center>No</center></b></td> -->
+				<!-- <td><b><center>Terms</center></b></td> -->
 				<?php foreach ($abstrak as $index => $abstraka) : ?>
-				<td width=50px><b><center>D<?php echo $index + 1 ?></center></b></td>
+				<!-- <td width=50px><b><center>D<?php //echo $index + 1 ?></center></b></td> -->
 				<?php endforeach; ?>
 				<?php for($i = 0; $i < $cluster_count; $i++): ?>
-				<td><b><center>C<?php echo $i+1 ?></center></b></td>
+				<!-- <td><b><center>C<?php //echo $i+1 ?></center></b></td> -->
 				<?php endfor; ?>
-			</tr>
-		</thead>
+			<!-- </tr> -->
+		<!-- </thead> -->
 	<?php 
 	$no = 0;
 	$clustering_array_baru = [];
@@ -377,51 +378,51 @@ foreach ($terms as $term => $count) : ?>
 		}
 	}
 	foreach ($tfidf_hasil_array as $term => $value) : ?>
-		<tr>
-			<td>
-				<?php $no++; echo $no ?>
-			</td>
-			<td>
-				<?php echo $term ?>
-			</td>
+		<!-- <tr> -->
+			<!-- <td> -->
+				<?php //$no++; echo $no ?>
+			<!-- </td> -->
+			<!-- <td> -->
+				<?php //echo $term ?>
+			<!-- </td> -->
 
 			<?php foreach ($value as $jindex => $hasil) : ?>
-			<td>
+			<!-- <td> -->
 				<?php
 				for ($i = 0; $i < $cluster_count; $i++) {
 					$clustering_array_baru[$jindex]['c' . ($i + 1)] += $hasil * $centroid[$term][$i];
 				}
-				echo $hasil;
+				//echo $hasil;
 				?>
-			</td>
+			<!-- </td> -->
 			<?php endforeach; ?>
 
 			<?php for($i = 0; $i < $cluster_count; $i++): ?>
-				<td>
+				<!-- <td> -->
 					<?php
-					echo $centroid[$term][$i]; ?>
-				</td>
+					//echo $centroid[$term][$i]; ?>
+				<!-- </td> -->
 			<?php endfor; ?>
-		</tr>
+		<!-- </tr> -->
 		<?php endforeach;?>
-	</table>
+	<!-- </table> -->
 	
 	<!-- clustering baru -->
-	<table border="1">
-		<thead>
-			<tr>
-				<td><b><center>Cluster</center></b></td>
+	<!-- <table border="1"> -->
+		<!-- <thead> -->
+			<!-- <tr> -->
+				<!-- <td><b><center>Cluster</center></b></td> -->
 				<?php foreach ($clustering_array_baru as $index => $cluster): ?>
-				<td><b><center><?php echo $index ?></center></b></td>
+				<!-- <td><b><center><?php //echo $index ?></center></b></td> -->
 				<?php endforeach; ?>
-			</tr>
-		</thead>
-		<tbody>
+			<!-- </tr> -->
+		<!-- </thead> -->
+		<!-- <tbody> -->
 			<?php $cluster_kmean = []; ?>
 			<?php for ($i = 0; $i < $cluster_count; $i++) : ?>
-				<tr>
+				<!-- <tr> -->
 					<?php $max = 'c1'; ?>
-					<td><?php echo 'c'.($i+1) ?></td>
+					<td><?php //echo 'c'.($i+1) ?></td>
 					<?php foreach ($clustering_array_baru as $jindex => $cluster) : ?>
 						<?php 
 							for ($j=0; $j < $cluster_count ; $j++) { 
@@ -432,20 +433,20 @@ foreach ($terms as $term => $count) : ?>
 							// array_push($cluster_kmean[$max], $jindex);
 							$cluster_kmean[$max][$jindex] = $jindex;							
 						?>
-						<td>
+						<!-- <td> -->
 							<?php if(('c' . ($i + 1)) == $max): ?>
-							<span style="background-color:green">
-								<?php echo $clustering_array_baru[$jindex]['c' . ($i + 1)]; ?>
-							</span>
+							<!-- <span style="background-color:green"> -->
+								<?php //echo $clustering_array_baru[$jindex]['c' . ($i + 1)]; ?>
+							<!-- </span> -->
 							<?php else: ?>
-								<?php echo $clustering_array_baru[$jindex]['c' . ($i + 1)]; ?>
+								<?php //echo $clustering_array_baru[$jindex]['c' . ($i + 1)]; ?>
 							<?php endif; ?>
-						</td>
+						<!-- </td> -->
 					<?php endforeach; ?>
-				</tr>
+				<!-- </tr> -->
 				<?php endfor; ?>
-		</tbody>
-	</table>
+		<!-- </tbody> -->
+	<!-- </table> -->
 
 	<table border="1">
 		<?php for ($i = 0; $i < $cluster_count; $i++) : ?>
