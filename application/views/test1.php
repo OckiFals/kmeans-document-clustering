@@ -1,7 +1,7 @@
 <?php
 
 class Stemming {
-    
+
     public function __construct() {
         $servername = "localhost";
         $username = "ockifals";
@@ -9,7 +9,7 @@ class Stemming {
         $dbname = "sholeh_skripsi";
         $this->conn = new mysqli($servername, $username, $password, $dbname);
     }
-    
+
     public function cari($array_kata) {
         if ($this->conn->connect_error) {
             die("Connection failed: " . $this->conn->connect_error);
@@ -17,7 +17,7 @@ class Stemming {
 
         $temp_in_query = "(";
         foreach ($array_kata as $index => $kata) {
-            $temp_in_query .= ($index == count($array_kata)-1) ? "'$kata'" : "'$kata', "; 
+            $temp_in_query .= ($index == count($array_kata) - 1) ? "'$kata'" : "'$kata', ";
         }
         $temp_in_query .= ")";
 
@@ -41,8 +41,8 @@ class Stemming {
         $kata_dasar = $this->cari($array_kata);
         foreach ($array_kata as $index => $kata) {
             if (!in_array($kata, $kata_dasar)) {
-                if ( (substr($kata, -3) == 'kah') || 
-                    (substr($kata, -3) == 'lah') || 
+                if ((substr($kata, -3) == 'kah') ||
+                    (substr($kata, -3) == 'lah') ||
                     (substr($kata, -3) == 'pun')) {
                     $kata = substr($kata, 0, -3);
                 }
@@ -59,9 +59,9 @@ class Stemming {
         foreach ($array_kata as $index => $kata) {
             if (!in_array($kata, $kata_dasar)) {
                 if (strlen($kata) > 4) {
-                    if ( (substr($kata, -2) == 'ku') || (substr($kata, -2) == 'mu')) {
+                    if ((substr($kata, -2) == 'ku') || (substr($kata, -2) == 'mu')) {
                         $kata = substr($kata, 0, -2);
-                    } else if ( (substr($kata, -3) == 'nya')) {
+                    } else if ((substr($kata, -3) == 'nya')) {
                         $kata = substr($kata, 0, -3);
                     }
                 }
@@ -93,8 +93,7 @@ class Stemming {
                     } else {
                         $kata = substr($kata, 3);
                     }
-                }
-                /*else if(substr($kata,0,3)=="mem"){
+                } /*else if(substr($kata,0,3)=="mem"){
                 if(substr($kata,3,1)=="a" || substr($kata,3,1)=="i" || substr($kata,3,1)=="e" || substr($kata,3,1)=="u" || substr($kata,3,1)=="o"){
                 if(substr($kata,3,1)=="a" || substr($kata,3,1)=="i" || substr($kata,3,1)=="e" || substr($kata,3,1)=="u" || substr($kata,3,1)=="o"){
                 $kata = "m".substr($kata,3);
@@ -116,7 +115,7 @@ class Stemming {
                 } else if (substr($kata, 0, 2) == "me") {
                     $kata = substr($kata, 2);
                 } else if (substr($kata, 0, 4) == "peng") {
-                //if(substr($kata,4,1)=="e" || substr($kata,4,1)=="a"){
+                    //if(substr($kata,4,1)=="e" || substr($kata,4,1)=="a"){
                     if (substr($kata, 4, 1) == "e") {
                         $kata = "k" . substr($kata, 4);
                     } else {
@@ -196,4 +195,5 @@ class Stemming {
         return $array_kata;
     }
 }
+
 ?>
