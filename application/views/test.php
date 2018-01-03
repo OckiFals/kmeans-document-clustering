@@ -212,10 +212,13 @@ $cluster_baru = [];
 <?php foreach ($tfidf_hasil_array as $key => $value): ?>
     <?php for ($i = 0; $i < $cluster_count; $i++): ?>
         <?php $sum = 0 ?>
-        <?php foreach ($cluster_kmean['c' . ($i + 1)] as $c => $d) : ?>
-            <?php $sum += $value[$d] ?>
-        <?php endforeach; ?>
-        <?php $centroid[$key][$i] = $sum / count($cluster_kmean['c' . ($i + 1)]);
+        <?php if (array_key_exists('c' . ($i + 1), $cluster_kmean)) : ?>
+            <?php foreach ($cluster_kmean['c' . ($i + 1)] as $c => $d) : ?>
+                <?php $sum += $value[$d] ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        <?php $centroid[$key][$i] = array_key_exists('c' . ($i + 1), $cluster_kmean) ? 
+         $sum / count($cluster_kmean['c' . ($i + 1)]) : 0;
         ?>
     <?php endfor; ?>
 <?php endforeach; ?>

@@ -39,7 +39,7 @@ if ($kluster != "" || $kluster != null) {
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-2   control-label">Total Skripsi</label>
+                                <label for="inputEmail3" class="col-sm-2 control-label">Total Skripsi</label>
 
                                 <div class="col-sm-10">
                                     <input type="ntext" class="form-control" id="jumlahskripsi" placeholder="" disabled>
@@ -75,14 +75,19 @@ if ($kluster != "" || $kluster != null) {
                                 <?php $hasil_clustering = []; ?>
                                 <table border="1" align="center">
                                     <?php for ($i = 0; $i < $cluster_count; $i++) : ?>
-                                        <?php $hasil_clustering[] = array_values($cluster_kmean['c' . ($i + 1)]); ?>
+                                        <?php $hasil_clustering[] = array_key_exists('c' . ($i + 1), $cluster_kmean) ? 
+                                            array_values($cluster_kmean['c' . ($i + 1)]) : '' ?>
                                         <tr>
                                             <td><b>
                                                     <center>C<?php echo $i + 1 ?></center>
                                                 </b></td>
+                                            <?php if (array_key_exists('c' . ($i + 1), $cluster_kmean)): ?>
                                             <?php foreach (array_keys($cluster_kmean['c' . ($i + 1)]) as $key => $value) : ?>
                                                 <td><?php echo $value ?></td>
                                             <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <td></td>
+                                            <?php endif; ?>
                                         </tr>
                                     <?php endfor; ?>
                                 </table>
@@ -98,43 +103,52 @@ if ($kluster != "" || $kluster != null) {
                                         <div class="box-body">
                                             <table class="table table-bordered">
                                                 <?php for ($i = 0; $i < $cluster_count; $i++) : ?>
-                                                    <?php
-                                                    $sql = "SELECT * FROM tambah_dokumen WHERE id_dokumen IN (";
+                                                    <?php if (array_key_exists('c' . ($i + 1), $cluster_kmean)): ?>
+                                                        <?php
+                                                        $sql = "SELECT * FROM tambah_dokumen WHERE id_dokumen IN (";
 
-                                                    foreach (array_keys($cluster_kmean['c' . ($i + 1)]) as $key => $value) {
-                                                        $sql .= ($abstrak_id[$value]);
+                                                        foreach (array_keys($cluster_kmean['c' . ($i + 1)]) as $key => $value) {
+                                                            $sql .= ($abstrak_id[$value]);
 
-                                                        if ($key + 1 == count($cluster_kmean['c' . ($i + 1)])) {
-                                                            $sql .= ')';
-                                                        } else {
-                                                            $sql .= ',';
+                                                            if ($key + 1 == count($cluster_kmean['c' . ($i + 1)])) {
+                                                                $sql .= ')';
+                                                            } else {
+                                                                $sql .= ',';
+                                                            }
                                                         }
-                                                    }
 
-                                                    $result = $conn->query($sql);
-                                                    if ($result->num_rows > 0) {
-                                                        $index = 0;
-                                                        while ($row = $result->fetch_array()) : ?>
-                                                            <tr>
-                                                                <?php if (0 == $index) : ?>
-                                                                    <td style="width: 80px"
-                                                                        rowspan="<?php echo count($cluster_kmean['c' . ($i + 1)]) ?>"
-                                                                        align="center">
-                                                                        Cluster <?php echo $i + 1 ?>
+                                                        $result = $conn->query($sql);
+                                                        if ($result->num_rows > 0) {
+                                                            $index = 0;
+                                                            while ($row = $result->fetch_array()) : ?>
+                                                                <tr>
+                                                                    <?php if (0 == $index) : ?>
+                                                                        <td style="width: 80px"
+                                                                            rowspan="<?php echo count($cluster_kmean['c' . ($i + 1)]) ?>"
+                                                                            align="center">
+                                                                            Cluster <?php echo $i + 1 ?>
+                                                                        </td>
+                                                                    <?php endif; ?>
+                                                                    <td style="width: 10px"><?php echo $row[3] ?></td>
+                                                                    <td style="width: 10px">
+                                                                        <?php
+                                                                        echo strtoupper($hasil_clustering[$i][$index]);
+                                                                        $index++;
+                                                                        ?>
                                                                     </td>
-                                                                <?php endif; ?>
-                                                                <td style="width: 10px"><?php echo $row[3] ?></td>
-                                                                <td style="width: 10px">
-                                                                    <?php
-                                                                    echo strtoupper($hasil_clustering[$i][$index]);
-                                                                    $index++;
-                                                                    ?>
-                                                                </td>
-                                                                <td><?php echo $row[1] ?></td>
-                                                            </tr>
-                                                        <?php endwhile;
-                                                    }
-                                                    ?>
+                                                                    <td><?php echo $row[1] ?></td>
+                                                                </tr>
+                                                            <?php endwhile;
+                                                        }
+                                                        ?>
+                                                    <?php else: ?>
+                                                        <tr>
+                                                            <td style="width: 80px">Cluster <?php echo $i + 1 ?></td>
+                                                            <td style="width: 10px">-</td>
+                                                            <td style="width: 10px">-</td>
+                                                            <td>-</td>
+                                                        </tr>
+                                                    <?php endif; ?>
                                                 <?php endfor; ?>
                                             </table>
                                         </div>
