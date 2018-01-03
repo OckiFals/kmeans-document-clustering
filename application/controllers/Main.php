@@ -30,6 +30,7 @@ class Main extends CI_Controller {
 
     public function klustering() {
         $data['kluster'] = $this->input->get('kluster');
+        $data['doc_count'] = $this->tambah_dokumen->count();
         if ($data['kluster'] != null || $data['kluster'] != "") {
             $state = "proses_kluster";
         } else {

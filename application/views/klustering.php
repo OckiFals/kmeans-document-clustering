@@ -42,7 +42,7 @@ if ($kluster != "" || $kluster != null) {
                                 <label for="inputEmail3" class="col-sm-2 control-label">Total Skripsi</label>
 
                                 <div class="col-sm-10">
-                                    <input type="ntext" class="form-control" id="jumlahskripsi" placeholder="" disabled>
+                                    <input type="text" class="form-control" placeholder="<?php echo $doc_count ?>" disabled>
                                 </div>
                             </div>
                         </div>

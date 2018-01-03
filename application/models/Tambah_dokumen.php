@@ -23,5 +23,10 @@ class tambah_dokumen extends CI_Model {
         $query = $this->db->get('tambah_dokumen');
         return $query->result();
     }
+
+    public function count() {
+        $query = $this->db->query('SELECT * FROM tambah_dokumen');
+        return $query->num_rows();
+    }
    
 }
