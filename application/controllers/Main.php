@@ -7,6 +7,7 @@ class Main extends CI_Controller {
         parent::__construct();
         $this->load->model('Document_model');
         $this->load->model('Stopword_model');
+        $this->load->helper('stemming_helper');
     }
 
     public function index() {
@@ -39,7 +40,8 @@ class Main extends CI_Controller {
         $this->load->view('header');
         $this->load->view('klustering', [
             'kluster' => $this->input->get('kluster'),
-            'doc_count' => $this->Document_model->count()
+            'doc_count' => $this->Document_model->count(),
+            'stemming' => new Stemming_helper()
         ]);
         $this->load->view('sidebar');
         $this->load->view('footer');

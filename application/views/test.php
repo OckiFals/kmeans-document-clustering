@@ -1,71 +1,4 @@
 <?php
-include('test1.php');
-function stopword($file) {
-    $servername = "localhost";
-    $username = "ockifals";
-    $password = "admin123";
-    $dbname = "sholeh_skripsi";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    $lines = $file;
-    $jadi = null;
-    $sql = "SELECT stopword FROM stopword";
-    $stopwordz = array();
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_array()) {
-            $stopwordz[] = $row[0];
-        }
-    }
-
-    $conn->close();
-
-    $trimmed = array_map('trim', $stopwordz);
-
-    $lines1 = array_map('trim', $lines);
-    $lines1 = preg_replace('/[0-9]+/', '', $lines1); // hapus angka
-
-    foreach ($lines1 as $line => $kata) {
-        $abstrak = $kata;
-        // $words = trim(preg_replace('/\s\s+/', ' ', $abstrak));
-        // $words = preg_replace('/\b\w\b\s?/', '', $words);
-        $string = str_replace(str_split(':%.,()'), '', $abstrak); // hapus tanda baca
-        $string = str_replace(str_split('-'), ' ', $string);
-        $string1 = explode(" ", strtolower($string));
-        $string2 = implode(" ", array_diff($string1, $trimmed));
-        $jadi = explode(" ", $string2);
-    }
-
-    $temp = array();
-
-    $stemming = new Stemming();
-
-    $iter_count = ceil(count($jadi) / 50);
-
-    for ($i = 0; $i < $iter_count; $i++) {
-        $start = $i * 50;
-        $end = ($start + 50 <= count($jadi)) ? $start + 49 : count($jadi);
-        $array_kata = array_slice($jadi, $start, $end);
-        $array_kata = $stemming->hapuspartikel($array_kata);
-        $array_kata = $stemming->hapuspp($array_kata);
-        $array_kata = $stemming->hapusawalan($array_kata);
-        $array_kata = $stemming->hapusawalan2($array_kata);
-        $array_kata = $stemming->hapusakhiran($array_kata);
-        $temp = array_merge($temp, $array_kata);
-    }
-
-    $hitung = array_count_values($temp);
-    ksort($hitung);
-    return $hitung;
-}
-
 $servername = "localhost";
 $username = "ockifals";
 $password = "admin123";
@@ -100,7 +33,7 @@ $wtf = [];
 $wtf_temp = [];
 for ($i = 0; $i < count($abstrak); $i++) {
     $file = array($abstrak[$i]);
-    $terms_temp[$i] = stopword($file);
+    $terms_temp[$i] = $stemming->stopword($file);
     $terms = array_merge($terms, $terms_temp[$i]);
 
     $wtf_temp[$i] = $terms_temp[$i];
@@ -112,7 +45,7 @@ for ($i = 0; $i < count($abstrak); $i++) {
 }
 
 // test input
-$cluster_count = $this->session->userdata('kluster');
+$cluster_count = $kluster;
 
 ksort($terms);
 ksort($wtf);
