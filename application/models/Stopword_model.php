@@ -12,8 +12,8 @@ class Stopword_model extends CI_Model {
 
     public function update() {
         $data = array(
-            'id' =>$this->input->post('id'),
-            'stopword' =>$this->input->post('stopword'),                
+            'id' => $this->input->post('id'),
+            'stopword' => $this->input->post('stopword'),                
         );
 
         $this->db->insert('stopword', $data);

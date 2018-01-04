@@ -1,32 +1,17 @@
 <?php
 
-class Stemming_helper {
+class Stemming_helper extends CI_Model {
      public function __construct() {
-        $servername = "localhost";
-        $username = "ockifals";
-        $password = "admin123";
-        $dbname = "sholeh_skripsi";
-        $this->conn = new mysqli($servername, $username, $password, $dbname);
+        parent::__construct();
+        $this->load->model('Stopword_model');
+        $this->load->model('Basicword_model');
     }
 
-    public function stopword($file) {
-        // Create connection
-        $conn = $this->conn;
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+    public function stopword($lines) {
+        $result = $this->Stopword_model->getAll();
 
-        $lines = $file;
-        $jadi = null;
-        $sql = "SELECT stopword FROM stopword";
-        $stopwordz = array();
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_array()) {
-                $stopwordz[] = $row[0];
-            }
+        foreach ($result as $index => $stopword) {
+            $stopwordz[] = $stopword->stopword;
         }
 
         $trimmed = array_map('trim', $stopwordz);
@@ -36,8 +21,6 @@ class Stemming_helper {
 
         foreach ($lines1 as $line => $kata) {
             $abstrak = $kata;
-            // $words = trim(preg_replace('/\s\s+/', ' ', $abstrak));
-            // $words = preg_replace('/\b\w\b\s?/', '', $words);
             $string = str_replace(str_split(':%.,()'), '', $abstrak); // hapus tanda baca
             $string = str_replace(str_split('-'), ' ', $string);
             $string1 = explode(" ", strtolower($string));
@@ -67,26 +50,16 @@ class Stemming_helper {
     }
 
     public function cari($array_kata) {
-        if ($this->conn->connect_error) {
-            die("Connection failed: " . $this->conn->connect_error);
-        }
-
         $temp_in_query = "(";
         foreach ($array_kata as $index => $kata) {
             $temp_in_query .= ($index == count($array_kata) - 1) ? "'$kata'" : "'$kata', ";
         }
         $temp_in_query .= ")";
-
-        //membuat variabel $hasil untuk menampilkan hasil mengambil kata dasar dari database
-        //$hasil = mysql_num_rows(mysql_query("SELECT * FROM tb_katadasar WHERE katadasar='$kata'"));
-        $sql = "SELECT * FROM tb_katadasar WHERE katadasar IN $temp_in_query";
         $hasil = [];
-        $result = $this->conn->query($sql);
+        $result = $this->Basicword_model->filterIN($temp_in_query);
 
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_array()) {
-                array_push($hasil, $row[1]);
-            }
+        foreach ($result as $index => $basicword) {
+             array_push($hasil, $basicword->word);
         }
 
         return $hasil; //mengeksekusi variabel $hasil
@@ -149,16 +122,7 @@ class Stemming_helper {
                     } else {
                         $kata = substr($kata, 3);
                     }
-                } /*else if(substr($kata,0,3)=="mem"){
-                if(substr($kata,3,1)=="a" || substr($kata,3,1)=="i" || substr($kata,3,1)=="e" || substr($kata,3,1)=="u" || substr($kata,3,1)=="o"){
-                if(substr($kata,3,1)=="a" || substr($kata,3,1)=="i" || substr($kata,3,1)=="e" || substr($kata,3,1)=="u" || substr($kata,3,1)=="o"){
-                $kata = "m".substr($kata,3);
-                }
-                }else{
-                $kata = substr($kata,3);
-                }
-                }*/
-                else if (substr($kata, 0, 3) == "mem") {
+                } else if (substr($kata, 0, 3) == "mem") {
                     if (substr($kata, 3, 1) == "a") {
                         $kata = "m" . substr($kata, 3);
                     } else if (substr($kata, 3, 2) == "in") {

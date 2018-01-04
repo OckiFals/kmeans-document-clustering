@@ -1,9 +1,3 @@
-<?php
-if ($kluster != "" || $kluster != null) {
-    include('application/views/test.php');
-}
-?>
-
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -70,10 +64,10 @@ if ($kluster != "" || $kluster != null) {
                     <form class="form-horizontal">
                         <div class="box-body">
 
-                            <?php if ($kluster != "" || $kluster != null) : ?>
+                            <?php if (isset($cluster_kmean)) : ?>
                                 <?php $hasil_clustering = []; ?>
                                 <table border="1" align="center">
-                                    <?php for ($i = 0; $i < $cluster_count; $i++) : ?>
+                                    <?php for ($i = 0; $i < $kluster; $i++) : ?>
                                         <?php $hasil_clustering[] = array_key_exists('c' . ($i + 1), $cluster_kmean) ? 
                                             array_values($cluster_kmean['c' . ($i + 1)]) : '' ?>
                                         <tr>
@@ -101,10 +95,10 @@ if ($kluster != "" || $kluster != null) {
                                         <!-- /.box-header -->
                                         <div class="box-body">
                                             <table class="table table-bordered">
-                                                <?php for ($i = 0; $i < $cluster_count; $i++) : ?>
+                                                <?php for ($i = 0; $i < $kluster; $i++) : ?>
                                                     <?php if (array_key_exists('c' . ($i + 1), $cluster_kmean)): ?>
                                                         <?php
-                                                        $sql = "SELECT * FROM document WHERE id IN (";
+                                                        $sql = "(";
 
                                                         foreach (array_keys($cluster_kmean['c' . ($i + 1)]) as $key => $value) {
                                                             $sql .= ($abstrak_id[$value]);
@@ -116,30 +110,24 @@ if ($kluster != "" || $kluster != null) {
                                                             }
                                                         }
 
-                                                        $result = $conn->query($sql);
-                                                        if ($result->num_rows > 0) {
-                                                            $index = 0;
-                                                            while ($row = $result->fetch_array()) : ?>
-                                                                <tr>
-                                                                    <?php if (0 == $index) : ?>
-                                                                        <td style="width: 80px"
-                                                                            rowspan="<?php echo count($cluster_kmean['c' . ($i + 1)]) ?>"
-                                                                            align="center">
-                                                                            Cluster <?php echo $i + 1 ?>
-                                                                        </td>
-                                                                    <?php endif; ?>
-                                                                    <td style="width: 10px"><?php echo $row[3] ?></td>
-                                                                    <td style="width: 10px">
-                                                                        <?php
-                                                                        echo strtoupper($hasil_clustering[$i][$index]);
-                                                                        $index++;
-                                                                        ?>
+                                                        $result = $this->Document_model->filterIN($sql);
+
+                                                        foreach ($result as $index => $doc) : ?>
+                                                            <tr>
+                                                                <?php if (0 == $index) : ?>
+                                                                    <td style="width: 80px"
+                                                                        rowspan="<?php echo count($cluster_kmean['c' . ($i + 1)]) ?>"
+                                                                        align="center">
+                                                                        Cluster <?php echo $i + 1 ?>
                                                                     </td>
-                                                                    <td><?php echo $row[1] ?></td>
-                                                                </tr>
-                                                            <?php endwhile;
-                                                        }
-                                                        ?>
+                                                                <?php endif; ?>
+                                                                <td style="width: 10px"><?php echo $doc->tahun ?></td>
+                                                                <td style="width: 10px">
+                                                                    <?php echo strtoupper($hasil_clustering[$i][$index]); ?>
+                                                                </td>
+                                                                <td><?php echo $doc->judul ?></td>
+                                                            </tr>
+                                                        <?php endforeach ?>
                                                     <?php else: ?>
                                                         <tr>
                                                             <td style="width: 80px">Cluster <?php echo $i + 1 ?></td>

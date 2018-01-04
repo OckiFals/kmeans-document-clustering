@@ -8,6 +8,7 @@ class Main extends CI_Controller {
         $this->load->model('Document_model');
         $this->load->model('Stopword_model');
         $this->load->helper('stemming_helper');
+        $this->load->helper('clustering_helper');
     }
 
     public function index() {
@@ -37,12 +38,26 @@ class Main extends CI_Controller {
     }
 
     public function klustering() {
+        $kluster = $this->input->get('kluster');
         $this->load->view('header');
-        $this->load->view('klustering', [
-            'kluster' => $this->input->get('kluster'),
-            'doc_count' => $this->Document_model->count(),
-            'stemming' => new Stemming_helper()
-        ]);
+        if ("" == $kluster || null == $kluster) {
+            $this->load->view('klustering', [
+                'kluster' => $this->input->get('kluster'),
+                'doc_count' => $this->Document_model->count()
+            ]);
+        } else { // process
+            $clustering_helper = new Clustering_helper();
+            $result = $this->Document_model->getAll();
+            foreach ($result as $index => $doc) {
+                $abstrak_id['d' . ($index + 1)] = $doc->id;
+            }
+            $this->load->view('klustering', [
+                'kluster' => $this->input->get('kluster'),
+                'doc_count' => $this->Document_model->count(),
+                'cluster_kmean' => $clustering_helper->process($kluster),
+                'abstrak_id' => $abstrak_id
+            ]);
+        }
         $this->load->view('sidebar');
         $this->load->view('footer');
     }
