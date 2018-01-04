@@ -77,7 +77,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT id_dokumen, abstrak FROM tambah_dokumen";
+$sql = "SELECT id, abstrak FROM document";
 $abstrak_id = [];
 $abstrak = array();
 $result = $conn->query($sql);

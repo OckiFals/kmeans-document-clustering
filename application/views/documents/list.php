@@ -20,7 +20,7 @@
                         <h3 class="box-title">Daftar Skripsi</h3>
                         <div class="box-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
-                                <a href="<?php echo base_url('forminput') ?>" class="btn btn-info btn-sm btn-flat pull-right">
+                                <a href="<?php echo base_url('main/add') ?>" class="btn btn-info btn-sm btn-flat pull-right">
                                     Tambahkan Data
                                 </a>
                             </div>
@@ -37,19 +37,15 @@
                                 <th style="width: 50px">Action</th>
                             </tr>
 
-                            <?php
-                            $no = 1;
-                            foreach ($query as $row) {
-                                ?>
-
+                            <?php foreach ($documents as $index => $row) : ?>
                                 <tr>
-                                    <td><?php echo $no++ ?></td>
-                                    <td><?php echo $row->judul_skripsi ?></td>
+                                    <td><?php echo $index+1 ?></td>
+                                    <td><?php echo $row->judul ?></td>
                                     <td><span class="badge bg-primary"><?php echo $row->tahun ?></span></td>
                                     <td><?php echo $row->fakultas ?></td>
                                     <td>
                                         <div class="" align="left">
-                                            <a href="<?php echo base_url('delete_dokumenskripsi/hapus/' . $row->id_dokumen) ?>">
+                                            <a href="<?php echo base_url('delete_dokumenskripsi/hapus/' . $row->id) ?>">
                                                 <button class="btn btn-flat btn-sm btn-danger">
                                                     <i class="glyphicon glyphicon-trash"></i>
                                                 </button>
@@ -57,12 +53,11 @@
                                         </div>
                                     </td>
                                 </tr>
-                            <?php } ?>
+                            <?php endforeach; ?>
                         </table>
                     </div>
                     <!-- /.box-body -->
                 </div>
-
             </div>
             <!-- /.col -->
         </div>

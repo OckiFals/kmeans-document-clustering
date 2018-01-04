@@ -6,10 +6,10 @@
             <li class="header">MAIN NAVIGATION</li>
 
 
-            <li class="<?php if ($this->uri->segment(1) == "daftarpaper") {
+            <li class="<?php if ($this->uri->segment(1) == "") {
                 echo "active";
             } ?>">
-                <a href="<?php echo base_url('daftarpaper') ?>">
+                <a href="<?php echo base_url('') ?>">
                     <i class="fa fa-edit"></i> <span>Data Skripsi</span>
                     <span class="pull-right-container">
               <!-- <i class="fa fa-angle-left pull-right"></i> -->

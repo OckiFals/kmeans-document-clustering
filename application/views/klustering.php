@@ -27,15 +27,14 @@ if ($kluster != "" || $kluster != null) {
                     <div class="box-header with-border">
                         <h3 class="box-title">Klustering Skripsi</h3>
                     </div>
-                    <form class="form-horizontal" action="<?php echo base_url('main/proses') ?>" method="POST">
+                    <form class="form-horizontal" action="" method="GET">
                         <div class="box-body">
 
                             <div class="form-group">
-                                <label for="inputJudul" class="col-sm-2   control-label">Jumlah K</label>
-
+                                <label for="klustering" class="col-sm-2 control-label">Jumlah K</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="klustering" class="form-control" id="klustering"
-                                           placeholder="Masukkan Jumlah Kluster">
+                                    <input type="number" name="kluster" class="form-control" id="klustering"
+                                           placeholder="Masukkan Jumlah Kluster" value="<?php echo $kluster ?>">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -105,7 +104,7 @@ if ($kluster != "" || $kluster != null) {
                                                 <?php for ($i = 0; $i < $cluster_count; $i++) : ?>
                                                     <?php if (array_key_exists('c' . ($i + 1), $cluster_kmean)): ?>
                                                         <?php
-                                                        $sql = "SELECT * FROM tambah_dokumen WHERE id_dokumen IN (";
+                                                        $sql = "SELECT * FROM document WHERE id IN (";
 
                                                         foreach (array_keys($cluster_kmean['c' . ($i + 1)]) as $key => $value) {
                                                             $sql .= ($abstrak_id[$value]);

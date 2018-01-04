@@ -1,13 +1,18 @@
 <?php
 
-class tambah_dokumen extends CI_Model {
+class Document_model extends CI_Model {
     public function __construct(){
         parent::__construct();
     }
 
-    public function addDoc_skripsi(){
+    public function getAll() {
+        $query = $this->db->get('document');
+        return $query->result();
+    }
+
+    public function create() {
         $data = array(
-            'judul_skripsi' =>$this->input->post('judul_skripsi'),
+            'judul' =>$this->input->post('judul_skripsi'),
             'fakultas' =>$this->input->post('fakultas'),
             'tahun' =>$this->input->post('tahun'),
             'abstrak' =>$this->input->post('abstrak'),
@@ -15,17 +20,15 @@ class tambah_dokumen extends CI_Model {
             'dapus' =>$this->input->post('dapus'),
             'file_type' =>$this->input->post('dokumen'),                
         );
-
-        $this->db->insert('tambah_dokumen', $data);
+        $this->db->insert('document', $data);
     }
 
-    public function read(){
-        $query = $this->db->get('tambah_dokumen');
-        return $query->result();
+    public function delete($id){
+        $this->db->delete('document', ['id' => $id]);
     }
 
     public function count() {
-        $query = $this->db->query('SELECT * FROM tambah_dokumen');
+        $query = $this->db->query('SELECT * FROM document');
         return $query->num_rows();
     }
    
