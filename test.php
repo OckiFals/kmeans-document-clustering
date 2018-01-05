@@ -1,5 +1,5 @@
 <?php 
-include('test1.php');
+include('stemming.php');
 function stopword($file) {
 	$servername = "localhost";
 	$username = "ockifals";
@@ -83,7 +83,7 @@ if ($conn->connect_error) {
 	die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT abstrak FROM tambah_dokumen";
+$sql = "SELECT abstrak FROM document";
 $abstrak = array();
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
