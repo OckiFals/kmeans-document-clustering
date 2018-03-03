@@ -50,11 +50,14 @@
                                                     <i class="glyphicon glyphicon-edit"></i>
                                                 </button>
                                             </a>
-                                            <a href="<?php echo base_url('main/delete/' . $row->id) ?>">
-                                                <button class="btn btn-flat btn-sm btn-danger">
+											<a href="#" data-object-id="<?php echo $row->id ?>"
+												data-object-name="<?php echo $row->judul ?>"
+												data-toggle="modal" data-href="<?php echo base_url('main/delete/' . $row->id) ?>"
+												data-target="#confirm-delete">
+												<button class="btn btn-flat btn-sm btn-danger">
                                                     <i class="glyphicon glyphicon-trash"></i>
                                                 </button>
-                                            </a>
+											 </a> 
                                         </div>
                                     </td>
                                 </tr>
@@ -70,3 +73,26 @@
     </section>
     <!-- /.content -->
 </div>
+
+<!-- delete modal -->
+<?php $this->load->view('delete-modal') ?>
+<!-- /delete modal -->
+
+<script type="application/javascript">
+	$(document).ready(function () {
+		var confirm_modal = $('#confirm-delete');
+		var btn_target;
+
+		confirm_modal.on('show.bs.modal', function (e) {
+			var button = $(e.relatedTarget); // Button that triggered the modal
+			var id = button.data('object-id'); // Extract post id from data-name attribute
+			var title = button.data('object-name'); // Extract post id from data-name attribute
+			btn_target = button;
+			var modal = $(this);
+			modal.find('#type-modal').text('Dokumen Skripsi');
+			modal.find('#object-id').text(id);
+			modal.find('#object-name').text(title);
+			$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+		});
+	});
+</script>
