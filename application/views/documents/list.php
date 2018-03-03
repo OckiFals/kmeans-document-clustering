@@ -34,7 +34,7 @@
                                 <th style="width: 50px">Judul Skripsi</th>
                                 <th style="width: 50px">Tahun</th>
                                 <th style="width: 50px">Fakultas</th>
-                                <th style="width: 50px">Action</th>
+                                <th style="width: 80px">Action</th>
                             </tr>
 
                             <?php foreach ($documents as $index => $row) : ?>
@@ -44,8 +44,13 @@
                                     <td><span class="badge bg-primary"><?php echo $row->tahun ?></span></td>
                                     <td><?php echo $row->fakultas ?></td>
                                     <td>
-                                        <div class="" align="left">
-                                            <a href="<?php echo base_url('delete_dokumenskripsi/hapus/' . $row->id) ?>">
+										<div class="" align="left">
+                                            <a href="<?php echo base_url('main/edit/' . $row->id) ?>">
+                                                <button class="btn btn-flat btn-sm btn-primary">
+                                                    <i class="glyphicon glyphicon-edit"></i>
+                                                </button>
+                                            </a>
+                                            <a href="<?php echo base_url('main/delete/' . $row->id) ?>">
                                                 <button class="btn btn-flat btn-sm btn-danger">
                                                     <i class="glyphicon glyphicon-trash"></i>
                                                 </button>

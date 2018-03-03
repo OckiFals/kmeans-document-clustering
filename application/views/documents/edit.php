@@ -18,7 +18,7 @@
                 <!-- Horizontal Form -->
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Masukkan Paper Baru</h3>
+                        <h3 class="box-title">Ubah Paper Baru</h3>
                     </div>
                     <form class="form-horizontal" action="" method="post">
                         <div class="box-body">
@@ -28,7 +28,7 @@
 
                                 <div class="col-sm-10">
                                     <input type="text" name="judul_skripsi" class="form-control" id="judul_skripsi"
-                                           placeholder="Masukkan Judul">
+                                           placeholder="Masukkan Judul" value="<?php echo $document->judul ?>">
                                 </div>
                             </div>
 
@@ -37,21 +37,51 @@
                                 <div class="col-sm-10">
                                     <!-- <input type="text" name="fakultas" class="form-control" id="fakultas"> -->
                                     <select class="form-control select2" id="fakultas" name="fakultas">
-                                        <option value="Fakultas Ilmu Komputer">Fakultas Ilmu Komputer</option>
-                                        <option value="Fakultas Hukum">Fakultas Hukum</option>
-                                        <option value="Fakultas Ekonomi dan Bisnis">Fakultas Ekonomi dan Bisnis</option>
-                                        <option value="Fakultas Ilmu Administrasi">Fakultas Ilmu Administrasi</option>
-                                        <option value="Fakultas Pertanian">Fakultas Pertanian</option>
-                                        <option value="Fakultas Peternakan">Fakultas Peternakan</option>
-                                        <option value="Fakultas Teknik">Fakultas Teknik</option>
-                                        <option value="Fakultas Kedokteran">Fakultas Kedokteran</option>
-                                        <option value="Fakultas Perikanan dan Ilmu Kelautan">Fakultas Perikanan dan Ilmu Kelautan</option>
-                                        <option value="Fakultas Matematika dan Ilmu Pengetahuan Alam">Fakultas Matematika dan Ilmu Pengetahuan Alam</option>
-                                        <option value="Fakultas Teknologi Pertanian">Fakultas Teknologi Pertanian</option>
-                                        <option value="Fakultas Ilmu Sosial dan Ilmu Politik">Fakultas Ilmu Sosial dan Ilmu Politik</option>
-                                        <option value="Fakultas Ilmu Budaya">Fakultas Ilmu Budaya</option>
-                                        <option value="Fakultas Kedokteran Hewa">Fakultas Kedokteran Hewan</option>
-                                        <option value="Fakultas Kedokteran Gigi">Fakultas Kedokteran Gigi</option>
+                                        <option value="Fakultas Ilmu Komputer" <?php echo ('Fakultas Ilmu Komputer' == $document->fakultas) ? 'selected' : '' ?>>
+											Fakultas Ilmu Komputer
+										</option>
+                                        <option value="Fakultas Hukum" <?php echo ('Fakultas Hukum' == $document->fakultas) ? 'selected' : '' ?>>
+											Fakultas Hukum
+										</option>
+                                        <option value="Fakultas Ekonomi dan Bisnis" <?php echo ('Fakultas Ekonomi dan Bisnis' == $document->fakultas) ? 'selected' : '' ?>>
+											Fakultas Ekonomi dan Bisnis
+										</option>
+                                        <option value="Fakultas Ilmu Administrasi" <?php echo ('Fakultas Ilmu Administrasi' == $document->fakultas) ? 'selected' : '' ?>>
+											Fakultas Ilmu Administrasi
+										</option>
+                                        <option value="Fakultas Pertanian" <?php echo ('Fakultas Pertanian' == $document->fakultas) ? 'selected' : '' ?>>
+											Fakultas Pertanian
+										</option>
+                                        <option value="Fakultas Peternakan" <?php echo ('Fakultas Peternakan' == $document->fakultas) ? 'selected' : '' ?>>
+											Fakultas Peternakan
+										</option>
+                                        <option value="Fakultas Teknik" <?php echo ('Fakultas Teknik' == $document->fakultas) ? 'selected' : '' ?>>
+											Fakultas Teknik
+										</option>
+                                        <option value="Fakultas Kedokteran" <?php echo ('Fakultas Kedokteran' == $document->fakultas) ? 'selected' : '' ?>>
+											Fakultas Kedokteran
+										</option>
+                                        <option value="Fakultas Perikanan dan Ilmu Kelautan" <?php echo ('Fakultas Perikanan dan Ilmu Kelautan' == $document->fakultas) ? 'selected' : '' ?>>
+											Fakultas Perikanan dan Ilmu Kelautan
+										</option>
+                                        <option value="Fakultas Matematika dan Ilmu Pengetahuan Alam" <?php echo ('Fakultas Matematika dan Ilmu Pengetahuan Alam' == $document->fakultas) ? 'selected' : '' ?>>
+											Fakultas Matematika dan Ilmu Pengetahuan Alam
+										</option>
+                                        <option value="Fakultas Teknologi Pertanian" <?php echo ('Fakultas Teknologi Pertanian' == $document->fakultas) ? 'selected' : '' ?>>
+											Fakultas Teknologi Pertanian
+										</option>
+                                        <option value="Fakultas Ilmu Sosial dan Ilmu Politik" <?php echo ('Fakultas Ilmu Sosial dan Ilmu Politik' == $document->fakultas) ? 'selected' : '' ?>>
+											Fakultas Ilmu Sosial dan Ilmu Politik
+										</option>
+                                        <option value="Fakultas Ilmu Budaya" <?php echo ('Fakultas Ilmu Budaya' == $document->fakultas) ? 'selected' : '' ?>>
+											Fakultas Ilmu Budaya
+										</option>
+                                        <option value="Fakultas Kedokteran Hewan" <?php echo ('Fakultas Kedokteran Hewan' == $document->fakultas) ? 'selected' : '' ?>>
+											Fakultas Kedokteran Hewan
+										</option>
+                                        <option value="Fakultas Kedokteran Gigi" <?php echo ('Kedokteran Gigi' == $document->fakultas) ? 'selected' : '' ?>>
+											Fakultas Kedokteran Gigi
+										</option>
                                     </select>
                                 </div>
 
@@ -61,7 +91,7 @@
 
                                 <div class="col-sm-10">
                                     <input type="number" name="tahun" class="form-control" id="tahun"
-                                           placeholder="Masukkan Tahun Terbit Paper">
+                                           placeholder="Masukkan Tahun Terbit Paper" value="<?php echo $document->tahun ?>">
                                 </div>
                             </div>
 
@@ -69,7 +99,7 @@
                                 <label for="tahun" class="col-sm-2   control-label">Abstrak</label>
                                 <div class="col-sm-10">
                                     <textarea class="form-control" name="abstrak" id="abstrak" rows="15"
-                                              placeholder="Masukkan Abstrak"></textarea>
+                                              placeholder="Masukkan Abstrak"><?php echo $document->abstrak ?></textarea>
                                 </div>
                             </div>
 
@@ -78,7 +108,7 @@
 
                                 <div class="col-sm-10">
                                     <input type="text" name="kata_kunci" class="form-control" id="katakunci"
-                                           placeholder="Masukkan Kata Kunci Abstrak">
+                                           placeholder="Masukkan Kata Kunci Abstrak" value="<?php echo $document->kata_kunci ?>">
                                 </div>
 
                             </div>
@@ -95,10 +125,10 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="tahun" class="col-sm-2   control-label">Daftar Pustaka</label>
+                                <label for="tahun" class="col-sm-2   control-label">Daftar Isi</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" name="dapus" id="dapus" rows="15"
-                                              placeholder="Masukkan Daftar Pustaka"></textarea>
+                                    <textarea class="form-control" name="daftar_isi" rows="15"
+                                              placeholder="Masukkan Daftar Pustaka"><?php echo $document->daftar_isi ?></textarea>
                                 </div>
                             </div>
 
@@ -116,7 +146,8 @@
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer clearfix">
-                            <button type="" class="btn btn-default pull-left"><a href="daftarpaper">Lihat Tabel</a>
+                            <button type="" class="btn btn-default pull-left">
+								<a href="<?php echo base_url() ?>">Lihat Tabel</a>
                             </button>
                             <button type="submit" class="btn btn-info pull-right">Simpan</button>
                         </div>

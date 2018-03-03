@@ -30,7 +30,21 @@ class Main extends CI_Controller {
             $this->load->view('sidebar');
             $this->load->view('footer');
         }
-    }
+	}
+	
+	public function edit($id) {
+		if ('POST' === $this->input->server('REQUEST_METHOD')) {
+            $this->Document_model->update($id);
+            redirect(base_url('main'));
+        } else {
+			$this->load->view('header');
+			$this->load->view('documents/edit', [
+				'document' => $this->Document_model->getById($id)
+			]);
+			$this->load->view('sidebar');
+			$this->load->view('footer');
+		}
+	}
 
     public function delete($id) {
         $this->delete_dokumen->hapus_data($id);
