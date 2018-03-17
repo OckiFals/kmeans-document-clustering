@@ -1,8 +1,15 @@
 <?php
 
 class Clustering_helper extends CI_Model {
+
+    /**
+     * @var array $tfidf_hasil
+     */
+    private $tfidf_hasil;
+
     public function __construct() {
         parent::__construct();
+        $this->tfidf_hasil = [];
         $this->load->model('Document_model');
         $this->load->model('Stopword_model');
         $this->load->model('Basicword_model');
@@ -66,19 +73,17 @@ class Clustering_helper extends CI_Model {
 
                 $tfidf_arraycount[$jindex] += $tfidf;
                 $tfidf_sqrt[$jindex] = sqrt($tfidf_arraycount[$jindex]);
-            
             }
         }
 
         $no = 0;
-        $df = 0;
-        $tfidf_hasil_array = [];
         $clustering_array = [];
         foreach ($abstrak as $index => $obj) {
             for ($i = 0; $i < $cluster_count; $i++) {
                 $clustering_array['d' . ($index + 1)]['c' . ($i + 1)] = 0;
             }
         }
+
         foreach ($terms as $term => $count) {
             // normalisasi
             $no++;
@@ -97,7 +102,7 @@ class Clustering_helper extends CI_Model {
                     $random[$i] = mt_rand(0, mt_getrandmax() - 1) / mt_getrandmax();
                     $clustering_array['d' . ($jindex + 1)]['c' . ($i + 1)] += $tfidf_hasil * $random[$i];
                 }
-                $tfidf_hasil_array[$term]['d' . ($jindex + 1)] = $tfidf_hasil;
+                $this->tfidf_hasil[$term]['d' . ($jindex + 1)] = $tfidf_hasil;
             }
         }
 
@@ -118,7 +123,7 @@ class Clustering_helper extends CI_Model {
         $centroid = [];
 
         // hitung centroid
-        foreach ($tfidf_hasil_array as $key => $value){
+        foreach ($this->tfidf_hasil as $key => $value){
             for ($i = 0; $i < $cluster_count; $i++){
                 $sum = 0;
                 if (array_key_exists('c' . ($i + 1), $cluster_kmean)) {
@@ -131,14 +136,13 @@ class Clustering_helper extends CI_Model {
             }
         }
 
-        $no = 0;
         $clustering_array_baru = [];
         foreach ($abstrak as $index => $obj) {
             for ($i = 0; $i < $cluster_count; $i++) {
                 $clustering_array_baru['d' . ($index + 1)]['c' . ($i + 1)] = 0;
             }
         }
-        foreach ($tfidf_hasil_array as $term => $value) {
+        foreach ($this->tfidf_hasil as $term => $value) {
             foreach ($value as $jindex => $hasil) {
             
                 for ($i = 0; $i < $cluster_count; $i++) {
@@ -163,4 +167,12 @@ class Clustering_helper extends CI_Model {
 
         return $cluster_kmean;
     }
+
+    /**
+     * @return array
+     */
+    public function getTfidfHasil(): array {
+        return $this->tfidf_hasil;
+    }
+
 }
