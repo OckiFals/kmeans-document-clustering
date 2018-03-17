@@ -1,7 +1,7 @@
 <?php
 
 class Stemming_helper extends CI_Model {
-     public function __construct() {
+    public function __construct() {
         parent::__construct();
         $this->load->model('Stopword_model');
         $this->load->model('Basicword_model');
@@ -18,6 +18,7 @@ class Stemming_helper extends CI_Model {
 
         $lines1 = array_map('trim', $lines);
         $lines1 = preg_replace('/[0-9]+/', '', $lines1); // hapus angka
+        $lines1 = preg_replace('/\s+/', ' ', $lines1); // hapus baris baru
 
         foreach ($lines1 as $line => $kata) {
             $abstrak = $kata;

@@ -10,9 +10,11 @@ class Clustering_helper extends CI_Model {
     }
 
     public function process($cluster_count) {
+        $abstrak = [];
+
         $result = $this->Document_model->getAll();
         foreach ($result as $index => $doc) {
-            $abstrak[] = $doc->abstrak;
+            $abstrak[] = $doc->abstrak . ' ' . $doc->daftar_isi;
         }
 
         $terms = [];
@@ -110,12 +112,10 @@ class Clustering_helper extends CI_Model {
                 }
                 // array_push($cluster_kmean[$max], $jindex);
                 $cluster_kmean[$max][$jindex] = $jindex;
-            
             }
         }
 
         $centroid = [];
-        $cluster_baru = [];
 
         // hitung centroid
         foreach ($tfidf_hasil_array as $key => $value){
