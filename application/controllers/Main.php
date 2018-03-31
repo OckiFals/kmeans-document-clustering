@@ -7,8 +7,10 @@ class Main extends CI_Controller {
         parent::__construct();
         $this->load->model('Document_model');
         $this->load->model('Stopword_model');
+        $this->load->model('Result_model');
         $this->load->helper('stemming_helper');
         $this->load->helper('clustering_helper');
+        $this->load->helper('silhoutte_helper');
     }
 
     public function index() {
@@ -59,16 +61,48 @@ class Main extends CI_Controller {
                 'kluster' => $this->input->get('kluster'),
                 'doc_count' => $this->Document_model->count()
             ]);
-        } else { // process
+        } else if ('' !== $this->input->get('silhoutte-test')) { // process
+            $abstrak_id = [];
             $clustering_helper = new Clustering_helper();
-            $result = $this->Document_model->getAll();
-            foreach ($result as $index => $doc) {
+            $documents = $this->Document_model->getAll();
+            foreach ($documents as $index => $doc) {
                 $abstrak_id['d' . ($index + 1)] = $doc->id;
+            }
+            $cluster_kmean = $clustering_helper->process($kluster);
+
+            // create new results if table is empty
+            if (NULL === $this->Result_model->getLastDataId()) {
+                $this->Result_model->create([
+                    'cluster_kmean' => json_encode($cluster_kmean),
+                    'tfidf' => json_encode($clustering_helper->getTfidfHasil())
+                ]);
+            } else { //update
+                $this->Result_model->update([
+                    'cluster_kmean' => json_encode($cluster_kmean),
+                    'tfidf' => json_encode($clustering_helper->getTfidfHasil())
+                ]);
             }
             $this->load->view('klustering', [
                 'kluster' => $this->input->get('kluster'),
                 'doc_count' => $this->Document_model->count(),
-                'cluster_kmean' => $clustering_helper->process($kluster),
+                'cluster_kmean' => $cluster_kmean,
+                'abstrak_id' => $abstrak_id
+            ]);
+        } else { // silhoutte test
+            $abstrak_id = [];
+            $documents = $this->Document_model->getAll();
+            foreach ($documents as $index => $doc) {
+                $abstrak_id['d' . ($index + 1)] = $doc->id;
+            }
+            $result = $this->Result_model->get();
+            $cluster_kmean = json_decode($result->cluster_kmean, TRUE);
+            $tfidf = json_decode($result->tfidf, TRUE);
+            $silhoutte_helper = new Silhoutte_helper($tfidf, $kluster, $cluster_kmean);
+            $this->load->view('klustering', [
+                'kluster' => $this->input->get('kluster'),
+                'doc_count' => $this->Document_model->count(),
+                'cluster_kmean' => $cluster_kmean,
+                'silhoutte_results' => $silhoutte_helper->process(),
                 'abstrak_id' => $abstrak_id
             ]);
         }

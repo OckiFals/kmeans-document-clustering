@@ -22,7 +22,7 @@ class Stemming_helper extends CI_Model {
 
         foreach ($lines1 as $line => $kata) {
             $abstrak = $kata;
-            $string = str_replace(str_split(':%.,()'), '', $abstrak); // hapus tanda baca
+            $string = str_replace(str_split(':%.,()[]'), '', $abstrak); // hapus tanda baca
             $string = str_replace(str_split('-'), ' ', $string);
             $string1 = explode(" ", strtolower($string));
             $string2 = implode(" ", array_diff($string1, $trimmed));
