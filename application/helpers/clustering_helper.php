@@ -16,6 +16,10 @@ class Clustering_helper extends CI_Model {
         $this->load->helper('stemming_helper');
     }
 
+    /**
+     * @param $cluster_count
+     * @return array
+     */
     public function process($cluster_count) {
         $abstrak = [];
 
@@ -43,6 +47,9 @@ class Clustering_helper extends CI_Model {
             }
             $wtf = array_merge($wtf, $wtf_temp[$i]);
         }
+
+        // delete '' term
+        unset($terms['']);
 
         ksort($terms);
         ksort($wtf);
@@ -171,7 +178,7 @@ class Clustering_helper extends CI_Model {
     /**
      * @return array
      */
-    public function getTfidfHasil(): array {
+    public function getTfidfHasil() {
         return $this->tfidf_hasil;
     }
 
