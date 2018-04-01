@@ -29,7 +29,6 @@ class Silhoutte_helper extends CI_Model {
 
     public function process() {
         // TODO when cluster has only one document
-        $results = [];
         // inner cluster
         $distance_a = [];
         $average_a = [];
@@ -71,7 +70,10 @@ class Silhoutte_helper extends CI_Model {
         // average document distance with documents in outer cluster
         $this->averageOuterDistance($distance_b, $average_b);
 
-        return $results;
+        return [
+            'average_a' => $average_a,
+            'average_b' => $average_b
+        ];
     }
 
     /**
@@ -164,7 +166,15 @@ class Silhoutte_helper extends CI_Model {
         }
 
         foreach ($distance_b_raw as $key => $value) {
-            $average_b[$key] = array_sum($value);
+            /*
+             *  [
+             *   'd1(c2)' => 0.87186035093412,
+             *   'd2(c2)' => 0.9396565253587,
+             *   'd1(c3)' => 0.87155666631582,
+             *   ...
+             *  ]
+             */
+            $average_b[$key] = array_sum($value) / count($distance_b_raw[$key]);
         }
     }
 

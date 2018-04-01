@@ -12,7 +12,7 @@
         </ol>
     </section>
 
-    <!-- Main content -->
+    <!-- Data form content -->
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -53,6 +53,7 @@
     </section>
     <!-- /.content -->
 
+    <!-- Clustering results -->
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -61,14 +62,13 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">Klustering Skripsi</h3>
                     </div>
-                    <form class="form-horizontal">
-                        <div class="box-body">
+                    <div class="box-body">
 
                             <?php if (isset($cluster_kmean)) : ?>
                                 <?php $hasil_clustering = []; ?>
                                 <table border="1" align="center">
                                     <?php for ($i = 0; $i < $kluster; $i++) : ?>
-                                        <?php $hasil_clustering[] = array_key_exists('c' . ($i + 1), $cluster_kmean) ? 
+                                        <?php $hasil_clustering[] = array_key_exists('c' . ($i + 1), $cluster_kmean) ?
                                             array_values($cluster_kmean['c' . ($i + 1)]) : '' ?>
                                         <tr>
                                             <td><b>
@@ -144,9 +144,76 @@
                                 </div>
                             <?php endif ?>
                         </div>
-                    </form>
+                    <div class="box-footer">
+                        <form action="" method="GET">
+                            <input type="number" name="kluster" hidden="hidden" value="<?php echo $kluster ?>">
+                            <input type="text" name="silhoutte-test" hidden="hidden">
+                            <button type="submit" class="btn btn-info pull-right">Uji</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!--  Silhouette test -->
+    <?php if (isset($silhoutte_results)) : ?>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Horizontal Form -->
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Silhouette Test</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <!-- average-a -->
+                            <div class="col-xs-6">
+                                <div class="box">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Rata-rata Jarak Dalam Satu Cluster</h3>
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered">
+                                            <?php foreach ($silhoutte_results['average_a'] as $key => $value) : ?>
+                                                <tr>
+                                                    <td><?php echo $key ?></td>
+                                                    <td><?php echo $value ?></td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /average-a -->
+
+                            <!-- average-b -->
+                            <div class="col-xs-6">
+                                <div class="box">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Rata-rata Jarak Dokumen Antar Cluster</h3>
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered">
+                                            <?php foreach ($silhoutte_results['average_b'] as $key => $value) : ?>
+                                                <tr>
+                                                    <td><?php echo $key ?></td>
+                                                    <td><?php echo $value ?></td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /average-b -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
 </div>
