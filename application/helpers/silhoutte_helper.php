@@ -52,11 +52,7 @@ class Silhoutte_helper extends CI_Model {
         }
 
         // average document distance with documents in outer cluster
-        foreach ($this->cluster_kmean as $cluster_index => $cluster) {
-            foreach ($cluster as $document) {
-                $average_a["b(${document})"] = $this->averageInnerDistance($distance_a[$cluster_index], $document);
-            }
-        }
+        $this->averageInnerDistance($distance_a, $average_a);
 
         // outer cluster distance
         $cluster_kmean_index = array_keys($this->cluster_kmean);
@@ -95,24 +91,32 @@ class Silhoutte_helper extends CI_Model {
 
     /**
      * @param $distance array cluster distance
-     * @param $document string document name
-     * @return int average distance
+     * @param $average_a array
      */
-    public function averageInnerDistance($distance, $document) {
-        $average = [];
-
-        foreach ($distance as $index => $value) {
-            if (preg_match("(${document},d[0-9]+)", $index)) {
-                $average[] = $value;
+    public function averageInnerDistance($distance, &$average_a) {
+        foreach ($this->cluster_kmean as $cluster_index => $cluster) {
+            foreach ($cluster as $document) {
+                $average = [];
+                foreach ($distance[$cluster_index] as $index => $value) {
+                    if (preg_match("(${document},d[0-9]+)", $index)) {
+                        $average[] = $value;
+                    }
+                }
+                /*
+                 *  [
+                 *   'b(d1)' => 0.853998629248431,
+                 *   'b(d2)' => 0.8898405206140072,
+                 *   ...
+                 *  ]
+                 */
+                $average_a["b(${document})"] = array_sum($average) / count($average);
             }
         }
-
-        return array_sum($average) / count($average);
     }
 
     /**
      * @param $distance array cluster distance
-     * @param $average_b
+     * @param $average_b array
      */
     public function averageOuterDistance($distance, &$average_b) {
         /*
