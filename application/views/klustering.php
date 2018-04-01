@@ -147,7 +147,7 @@
                     <div class="box-footer">
                         <form action="" method="GET">
                             <input type="number" name="kluster" hidden="hidden" value="<?php echo $kluster ?>">
-                            <input type="text" name="silhoutte-test" hidden="hidden">
+                            <input type="text" name="stage" hidden="hidden" value="silhoutte-test">
                             <button type="submit" class="btn btn-info pull-right">Uji</button>
                         </form>
                     </div>

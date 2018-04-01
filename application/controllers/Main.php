@@ -56,12 +56,12 @@ class Main extends CI_Controller {
     public function klustering() {
         $kluster = $this->input->get('kluster');
         $this->load->view('header');
-        if ("" == $kluster || null == $kluster) {
+        if ('' == $kluster || null == $kluster) {
             $this->load->view('klustering', [
                 'kluster' => $this->input->get('kluster'),
                 'doc_count' => $this->Document_model->count()
             ]);
-        } else if ('' !== $this->input->get('silhoutte-test')) { // process
+        } else if ('silhoutte-test' !== $this->input->get('stage')) { // process
             $abstrak_id = [];
             $clustering_helper = new Clustering_helper();
             $documents = $this->Document_model->getAll();
