@@ -98,6 +98,15 @@ class Silhoutte_helper extends CI_Model {
     public function averageInnerDistance($distance, &$average_a) {
         foreach ($this->cluster_kmean as $cluster_index => $cluster) {
             foreach ($cluster as $document) {
+
+                /*
+                 * if cluster with has no document, set average to 0 and continue iteration
+                 */
+                if (!array_key_exists($cluster_index, $distance)) {
+                    $average_a["b(${document})"] = 0;
+                    continue;
+                }
+
                 $average = [];
                 foreach ($distance[$cluster_index] as $index => $value) {
                     if (preg_match("(${document},d[0-9]+)", $index)) {
