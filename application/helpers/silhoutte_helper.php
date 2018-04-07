@@ -70,9 +70,12 @@ class Silhoutte_helper extends CI_Model {
         // average document distance with documents in outer cluster
         $this->averageOuterDistance($distance_b, $average_b);
 
+        $coeficient = $this->shilhoutteCoeficient($average_a, $average_b);
+
         return [
             'average_a' => $average_a,
-            'average_b' => $average_b
+            'average_b' => $average_b,
+            'coeficient' => $coeficient
         ];
     }
 
@@ -98,6 +101,15 @@ class Silhoutte_helper extends CI_Model {
     public function averageInnerDistance($distance, &$average_a) {
         foreach ($this->cluster_kmean as $cluster_index => $cluster) {
             foreach ($cluster as $document) {
+
+                /*
+                 * if cluster with has no document, set average to 0 and continue iteration
+                 */
+                if (!array_key_exists($cluster_index, $distance)) {
+                    $average_a["a(${document})"] = 0;
+                    continue;
+                }
+
                 $average = [];
                 foreach ($distance[$cluster_index] as $index => $value) {
                     if (preg_match("(${document},d[0-9]+)", $index)) {
@@ -106,12 +118,12 @@ class Silhoutte_helper extends CI_Model {
                 }
                 /*
                  *  [
-                 *   'b(d1)' => 0.853998629248431,
-                 *   'b(d2)' => 0.8898405206140072,
+                 *   'd1' => 0.853998629248431,
+                 *   'd2' => 0.8898405206140072,
                  *   ...
                  *  ]
                  */
-                $average_a["b(${document})"] = array_sum($average) / count($average);
+                $average_a[$document] = array_sum($average) / count($average);
             }
         }
     }
@@ -148,7 +160,7 @@ class Silhoutte_helper extends CI_Model {
         // distance before average
         $distance_b_raw = [];
         foreach ($distance as $key => $value) {
-            preg_match("(d[0-9]+,d[0-9]+)", $key, $matches);
+            preg_match("#d[0-9]+,d[0-9]+#", $key, $matches);
             $doc = explode(',', $matches[0]);
             /*
              * [
@@ -166,6 +178,8 @@ class Silhoutte_helper extends CI_Model {
         }
 
         foreach ($distance_b_raw as $key => $value) {
+            preg_match("#d[0-9]+#", $key, $matches);
+            $doc = explode(',', $matches[0]);
             /*
              *  [
              *   'd1(c2)' => 0.87186035093412,
@@ -174,8 +188,35 @@ class Silhoutte_helper extends CI_Model {
              *   ...
              *  ]
              */
-            $average_b[$key] = array_sum($value) / count($distance_b_raw[$key]);
+            $average_b[$doc[0]][] = array_sum($value) / count($distance_b_raw[$key]);
         }
+
+        foreach ($average_b as $doc => $array_value) {
+            unset($average_b[$doc]);
+            /*
+             *  [
+             *   'd1' => 0.853998629248431,
+             *   'd2' => 0.8898405206140072,
+             *   ...
+             *  ]
+             */
+            $average_b[$doc] = array_sum($array_value) / count($array_value);
+        }
+    }
+
+    /**
+     * @param array $average_a
+     * @param array $average_b
+     * @return array
+     */
+    public function shilhoutteCoeficient(array $average_a, array $average_b) {
+        $result = [];
+
+        foreach ($average_a as $doc => $value_a) {
+            $result[$doc] = ($average_b[$doc] - $value_a) / max($value_a, $average_b[$doc]);
+        }
+
+        return $result;
     }
 
     /**
