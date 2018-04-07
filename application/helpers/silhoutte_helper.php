@@ -103,7 +103,7 @@ class Silhoutte_helper extends CI_Model {
                  * if cluster with has no document, set average to 0 and continue iteration
                  */
                 if (!array_key_exists($cluster_index, $distance)) {
-                    $average_a["b(${document})"] = 0;
+                    $average_a["a(${document})"] = 0;
                     continue;
                 }
 
@@ -115,12 +115,12 @@ class Silhoutte_helper extends CI_Model {
                 }
                 /*
                  *  [
-                 *   'b(d1)' => 0.853998629248431,
-                 *   'b(d2)' => 0.8898405206140072,
+                 *   'a(d1)' => 0.853998629248431,
+                 *   'a(d2)' => 0.8898405206140072,
                  *   ...
                  *  ]
                  */
-                $average_a["b(${document})"] = array_sum($average) / count($average);
+                $average_a["a(${document})"] = array_sum($average) / count($average);
             }
         }
     }
