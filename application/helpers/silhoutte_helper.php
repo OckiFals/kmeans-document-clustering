@@ -115,12 +115,12 @@ class Silhoutte_helper extends CI_Model {
                 }
                 /*
                  *  [
-                 *   'a(d1)' => 0.853998629248431,
-                 *   'a(d2)' => 0.8898405206140072,
+                 *   'd1' => 0.853998629248431,
+                 *   'd2' => 0.8898405206140072,
                  *   ...
                  *  ]
                  */
-                $average_a["a(${document})"] = array_sum($average) / count($average);
+                $average_a[$document] = array_sum($average) / count($average);
             }
         }
     }
@@ -190,7 +190,7 @@ class Silhoutte_helper extends CI_Model {
 
         foreach ($average_b as $doc => $array_value) {
             unset($average_b[$doc]);
-            $average_b["b(${doc})"] = array_sum($array_value) / count($array_value);
+            $average_b[$doc] = array_sum($array_value) / count($array_value);
         }
     }
 

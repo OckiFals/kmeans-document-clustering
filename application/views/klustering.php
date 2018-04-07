@@ -179,7 +179,7 @@
                                         <table class="table table-bordered">
                                             <?php foreach ($silhoutte_results['average_a'] as $key => $value) : ?>
                                                 <tr>
-                                                    <td><?php echo $key ?></td>
+                                                    <td>a(<?php echo $key ?>)</td>
                                                     <td><?php echo $value ?></td>
                                                 </tr>
                                             <?php endforeach; ?>
@@ -200,7 +200,7 @@
                                         <table class="table table-bordered">
                                             <?php foreach ($silhoutte_results['average_b'] as $key => $value) : ?>
                                                 <tr>
-                                                    <td><?php echo $key ?></td>
+                                                    <td>b(<?php echo $key ?>)</td>
                                                     <td><?php echo $value ?></td>
                                                 </tr>
                                             <?php endforeach; ?>
