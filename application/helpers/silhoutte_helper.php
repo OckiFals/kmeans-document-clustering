@@ -157,7 +157,7 @@ class Silhoutte_helper extends CI_Model {
         // distance before average
         $distance_b_raw = [];
         foreach ($distance as $key => $value) {
-            preg_match("(d[0-9]+,d[0-9]+)", $key, $matches);
+            preg_match("#d[0-9]+,d[0-9]+#", $key, $matches);
             $doc = explode(',', $matches[0]);
             /*
              * [
@@ -175,6 +175,8 @@ class Silhoutte_helper extends CI_Model {
         }
 
         foreach ($distance_b_raw as $key => $value) {
+            preg_match("#d[0-9]+#", $key, $matches);
+            $doc = explode(',', $matches[0]);
             /*
              *  [
              *   'd1(c2)' => 0.87186035093412,
@@ -183,7 +185,12 @@ class Silhoutte_helper extends CI_Model {
              *   ...
              *  ]
              */
-            $average_b[$key] = array_sum($value) / count($distance_b_raw[$key]);
+            $average_b[$doc[0]][] = array_sum($value) / count($distance_b_raw[$key]);
+        }
+
+        foreach ($average_b as $doc => $array_value) {
+            unset($average_b[$doc]);
+            $average_b["b(${doc})"] = array_sum($array_value) / count($array_value);
         }
     }
 
