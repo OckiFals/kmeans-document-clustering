@@ -209,6 +209,27 @@
                                 </div>
                             </div>
                             <!-- /average-b -->
+
+                            <!-- coeficient -->
+                            <div class="col-xs-6">
+                                <div class="box">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Silhoutte Coeficient</h3>
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered">
+                                            <?php foreach ($silhoutte_results['coeficient'] as $key => $value) : ?>
+                                                <tr>
+                                                    <td>s(<?php echo $key ?>)</td>
+                                                    <td><?php echo $value ?></td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /coeficient -->
                         </div>
                     </div>
                 </div>
